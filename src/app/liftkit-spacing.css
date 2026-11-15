@@ -1,0 +1,22 @@
+/*
+ * Spacing scale from LiftKit by Chainlift (Apache-2.0)
+ * https://github.com/Chainlift/liftkit — registry/universal/lib/css/liftkitvars.css
+ *
+ * Golden-ratio ladder: md = 1em, each step up × 1.618, each step down ÷ 1.618.
+ * Because the base is 1em, spacing scales with the element's own font size.
+ * At 16px: 3xs 2.3 · 2xs 3.8 · xs 6.1 · sm 9.9 · md 16 · lg 25.9 · xl 41.9 · 2xl 67.8 · 3xl 109.7 · 4xl 177.4
+ */
+:root {
+  --lk-scalefactor: 1.618;
+
+  --lk-size-md: 1em;
+  --lk-size-sm: calc(1em / var(--lk-scalefactor));
+  --lk-size-xs: calc(var(--lk-size-sm) / var(--lk-scalefactor));
+  --lk-size-2xs: calc(var(--lk-size-xs) / var(--lk-scalefactor));
+  --lk-size-3xs: calc(var(--lk-size-2xs) / var(--lk-scalefactor));
+  --lk-size-lg: calc(1em * var(--lk-scalefactor));
+  --lk-size-xl: calc(var(--lk-size-lg) * var(--lk-scalefactor));
+  --lk-size-2xl: calc(var(--lk-size-xl) * var(--lk-scalefactor));
+  --lk-size-3xl: calc(var(--lk-size-2xl) * var(--lk-scalefactor));
+  --lk-size-4xl: calc(var(--lk-size-3xl) * var(--lk-scalefactor));
+}
