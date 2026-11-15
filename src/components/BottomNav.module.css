@@ -1,0 +1,70 @@
+/* Floating liquid glass tab bar — Figma "Bottom navigation" (343×76 mobile, 520×56 desktop) */
+.nav {
+  position: fixed;
+  left: 50%;
+  bottom: var(--nav-offset);
+  z-index: 10;
+  display: flex;
+  align-items: stretch;
+  gap: var(--lk-size-2xs);
+  width: min(520px, calc(100% - 2 * var(--lk-size-lg)));
+  height: var(--nav-height);
+  padding: var(--lk-size-xs);
+  transform: translateX(-50%);
+  border-radius: 36px;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.item {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lk-size-2xs);
+  min-width: 0;
+  padding: 0 var(--lk-size-sm);
+  border: none;
+  border-radius: 30px;
+  background: transparent;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.item:hover {
+  color: var(--ink);
+}
+
+/* Current tab: a lens of brighter glass, accent-tinted. */
+.item[aria-current="page"] {
+  color: var(--accent);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 0 1px rgba(var(--accent-rgb), 0.18);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+}
