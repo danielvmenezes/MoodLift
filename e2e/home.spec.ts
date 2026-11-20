@@ -46,6 +46,11 @@ async function brightestCardPixel(page: Page) {
 test.describe("Main quote page", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
+    // Quotes stream in from Supabase; wait until React has revealed the real
+    // card (it sits hidden in the DOM for a moment before the swap).
+    await expect(page.getByTestId("quote-card")).toBeVisible();
+    await expect(page.getByTestId("quote-text")).not.toBeEmpty();
+    await expect(page.getByTestId("next-quote-button")).toBeEnabled();
   });
 
   test("shows quote, journal button and new-quote circle in order", async ({ page }) => {
@@ -165,7 +170,10 @@ test.describe("Main quote page", () => {
       (await credit.boundingBox())!.y - (await card.boundingBox())!.y;
     const creditStart = await creditY();
     const seen = new Set<string>();
-    for (let i = 0; i < 80 && seen.size < 6; i++) {
+    // Quotes are random from a large table, so check a sample of distinct ones;
+    // e2e/quote-dataset.spec.ts checks that every quote in the data set fits.
+    const SAMPLE = 15;
+    for (let i = 0; i < 60 && seen.size < SAMPLE; i++) {
       const t = (await text.textContent())!;
       if (!seen.has(t)) {
         seen.add(t);
@@ -184,7 +192,7 @@ test.describe("Main quote page", () => {
       }
       await next.click();
     }
-    expect(seen.size).toBe(6);
+    expect(seen.size).toBe(SAMPLE);
   });
 
   test("the quote is only shrunk when its full size wouldn't fit", async ({ page }) => {

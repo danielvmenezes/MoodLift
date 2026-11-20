@@ -47,3 +47,6 @@ next-env.d.ts
 
 # local notes
 /CLAUDE.md
+
+# quote pipeline download cache
+/.cache/

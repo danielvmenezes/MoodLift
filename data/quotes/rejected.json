@@ -1,0 +1,266 @@
+[
+  {
+    "id": "w-b-yeats-3045d493",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "w-b-yeats-3e9e4d55",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "w-b-yeats-a115ebce",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "joni-mitchell-17702db4",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "a-a-milne-04f1a92c",
+    "reason": "wording not found at source"
+  },
+  {
+    "id": "henry-wadsworth-longfellow-3066967f",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "mahatma-gandhi-67f5679c",
+    "reason": "excluded: Popular attribution; primary source not confirmed"
+  },
+  {
+    "id": "mahatma-gandhi-a62eb5d7",
+    "reason": "excluded: Popular attribution; primary source not confirmed"
+  },
+  {
+    "id": "gwendolyn-brooks-37ca709a",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "g-k-chesterton-b2adfe99",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "alexander-pope-e520098e",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "madeleine-l-engle-5df5117a",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "madeleine-l-engle-007f97de",
+    "reason": "excluded: Reads like a paraphrase; wording not confirmed"
+  },
+  {
+    "id": "harriet-beecher-stowe-e1af6d26",
+    "reason": "old-style split contraction"
+  },
+  {
+    "id": "harriet-beecher-stowe-e8e9c053",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "alfred-tennyson-ed5797a2",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "alfred-tennyson-aaec1047",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "ernest-hemingway-76610326",
+    "reason": "excluded: Source unclear"
+  },
+  {
+    "id": "rudyard-kipling-42efd027",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "rudyard-kipling-edac2729",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "leo-tolstoy-7489dba2",
+    "reason": "excluded: From A Calendar of Wisdom, which mixes Tolstoy with sayings he collected; authorship unclear"
+  },
+  {
+    "id": "leo-tolstoy-ded9513b",
+    "reason": "excluded: From A Calendar of Wisdom, which mixes Tolstoy with sayings he collected; authorship unclear"
+  },
+  {
+    "id": "gerard-manley-hopkins-407e88d0",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "helen-keller-8f74835c",
+    "reason": "excluded: Only loosely sourced"
+  },
+  {
+    "id": "rumi-dd36e4ba",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "kurt-vonnegut-47697199",
+    "reason": "excluded: Profanity (\"God damn it\"); editorial choice for a wellness app"
+  },
+  {
+    "id": "william-wordsworth-a9675d07",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "anton-chekhov-faeaff43",
+    "reason": "wording not found at source"
+  },
+  {
+    "id": "robert-browning-0dac2337",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-c6fe3283",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-c84c6109",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-8f17373e",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-aee742e7",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "hermann-hesse-2d737fe2",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "charlie-chaplin-ce55b90b",
+    "reason": "excluded: Song lyric; source not confirmed"
+  },
+  {
+    "id": "edith-wharton-7df431a5",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "christina-rossetti-c49f49cd",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "percy-bysshe-shelley-a3bb0c72",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "percy-bysshe-shelley-323a5b20",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "john-milton-833a436d",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "benjamin-franklin-f24e2f14",
+    "reason": "excluded: Source not confirmed in Franklin's writings"
+  },
+  {
+    "id": "dr-seuss-f48abd87",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "lao-tzu-0a6ca80f",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "lao-tzu-980ecc4b",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "emily-bronte-5ea43cba",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "roald-dahl-f15defab",
+    "reason": "excluded: Anonymous traditional rhyme that Dahl quoted, not his own line"
+  },
+  {
+    "id": "edna-st-vincent-millay-632d135d",
+    "reason": "wording not found at source"
+  },
+  {
+    "id": "howard-thurman-6bd655ae",
+    "reason": "excluded: Attribution debated; only reported second-hand (via Gil Bailie)"
+  },
+  {
+    "id": "abraham-lincoln-98b4385b",
+    "reason": "unknown candidate id"
+  },
+  {
+    "id": "abraham-lincoln-6e1791fd",
+    "reason": "unknown candidate id"
+  },
+  {
+    "id": "abraham-lincoln-0f5c2f99",
+    "reason": "unknown candidate id"
+  },
+  {
+    "id": "abraham-lincoln-64dc9bdb",
+    "reason": "unknown candidate id"
+  },
+  {
+    "id": "robert-frost-c8ff0c44",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "johann-wolfgang-von-goethe-8c990275",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "leonard-cohen-2ba400cb",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "mary-oliver-c77eee76",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "mary-oliver-95269029",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "anne-lamott-da2d1022",
+    "reason": "duplicate"
+  },
+  {
+    "id": "emily-dickinson-4c32c08b",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "paul-laurence-dunbar-058f9564",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "sara-teasdale-ed3f3a93",
+    "reason": "wording not found at source"
+  },
+  {
+    "id": "sara-teasdale-da5d9323",
+    "reason": "excluded: Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "sara-teasdale-327e138b",
+    "reason": "wording not found at source"
+  },
+  {
+    "id": "sara-teasdale-4bf33e02",
+    "reason": "wording not found at source"
+  },
+  {
+    "id": "sylvia-plath-6ffa3b6b",
+    "reason": "excluded: In The Bell Jar it follows a suicide attempt; unsafe context for the app"
+  },
+  {
+    "id": "barack-obama-99111a4e",
+    "reason": "excluded: Borrowed wording (June Jordan / \"Hopi elders\" text)"
+  }
+]

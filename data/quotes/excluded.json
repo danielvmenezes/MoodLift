@@ -1,0 +1,218 @@
+[
+  {
+    "id": "roald-dahl-f15defab",
+    "reason": "Anonymous traditional rhyme that Dahl quoted, not his own line"
+  },
+  {
+    "id": "howard-thurman-6bd655ae",
+    "reason": "Attribution debated; only reported second-hand (via Gil Bailie)"
+  },
+  {
+    "id": "benjamin-franklin-f24e2f14",
+    "reason": "Source not confirmed in Franklin's writings"
+  },
+  {
+    "id": "charlie-chaplin-ce55b90b",
+    "reason": "Song lyric; source not confirmed"
+  },
+  {
+    "id": "kurt-vonnegut-47697199",
+    "reason": "Profanity (\"God damn it\"); editorial choice for a wellness app"
+  },
+  {
+    "id": "leo-tolstoy-7489dba2",
+    "reason": "From A Calendar of Wisdom, which mixes Tolstoy with sayings he collected; authorship unclear"
+  },
+  {
+    "id": "leo-tolstoy-ded9513b",
+    "reason": "From A Calendar of Wisdom, which mixes Tolstoy with sayings he collected; authorship unclear"
+  },
+  {
+    "id": "ernest-hemingway-76610326",
+    "reason": "Source unclear"
+  },
+  {
+    "id": "helen-keller-8f74835c",
+    "reason": "Only loosely sourced"
+  },
+  {
+    "id": "madeleine-l-engle-007f97de",
+    "reason": "Reads like a paraphrase; wording not confirmed"
+  },
+  {
+    "id": "mahatma-gandhi-a62eb5d7",
+    "reason": "Popular attribution; primary source not confirmed"
+  },
+  {
+    "id": "mahatma-gandhi-67f5679c",
+    "reason": "Popular attribution; primary source not confirmed"
+  },
+  {
+    "id": "barack-obama-99111a4e",
+    "reason": "Borrowed wording (June Jordan / \"Hopi elders\" text)"
+  },
+  {
+    "id": "sylvia-plath-6ffa3b6b",
+    "reason": "In The Bell Jar it follows a suicide attempt; unsafe context for the app"
+  },
+  {
+    "id": "w-b-yeats-i-will-arise-and-go",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "w-b-yeats-all-hatred-driven-hence-the",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "w-b-yeats-i-am-content-to-follow",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "joni-mitchell-tears-and-fears-and-feeling",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "henry-wadsworth-longfellow-turn-turn-my-wheel-all",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "gwendolyn-brooks-say-to-them-say-to",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "g-k-chesterton-it-is-something-to-have",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "alexander-pope-where-er-you-walk-cool-gales",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "madeleine-l-engle-it-is-so-great-a",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "harriet-beecher-stowe-when-winds-are-raging-o-er",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "alfred-tennyson-there-is-sweet-music-here",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "alfred-tennyson-though-much-is-taken-much",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "rudyard-kipling-and-only-the-master-shall",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "rudyard-kipling-cities-and-thrones-and-powers",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "gerard-manley-hopkins-nothing-is-so-beautiful-as",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "rumi-the-eye-of-outward-sense",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "william-wordsworth-earth-has-not-anything-to",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-one-who-never-turned-his",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-the-year-s-at-the-spring",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-grow-old-along-with-me",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-there-shall-never-be-one",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-browning-then-welcome-each-rebuff-that",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "hermann-hesse-in-all-beginnings-dwells-a",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "edith-wharton-set-wide-the-window-let",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "christina-rossetti-hope-is-like-a-harebell",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "percy-bysshe-shelley-music-when-soft-voices-die",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "percy-bysshe-shelley-it-is-our-will-that",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "john-milton-he-that-has-light-within",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "dr-seuss-it-s-a-troublesome-world-all",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "lao-tzu-thirty-spokes-unite-at-the",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "lao-tzu-wise-men-don-t-need-to",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "emily-bronte-but-when-the-days-of",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-frost-i-d-like-to-go-by",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "johann-wolfgang-von-goethe-who-is-the-happiest-of",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "leonard-cohen-oh-the-sisters-of-mercy",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "mary-oliver-here-is-an-amazement",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "mary-oliver-two-or-three-times-in",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "emily-dickinson-i-never-saw-a-moor",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "paul-laurence-dunbar-because-you-love-me-i",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "sara-teasdale-i-lift-my-heart-as",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  }
+]

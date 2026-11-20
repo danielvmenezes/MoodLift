@@ -1,32 +1,75 @@
 "use client";
 
 import { BookOpen, Undo2 } from "lucide-react";
-import { useLayoutEffect, useReducer, useRef, type PointerEvent } from "react";
-import { quotes } from "@/lib/quotes";
+import { useEffect, useLayoutEffect, useReducer, useRef, type PointerEvent } from "react";
+import { fetchRandomQuotes, shuffledFallback, type Quote } from "@/lib/quotes";
 import styles from "./QuoteView.module.css";
 
-type State = { index: number; history: number[] };
-type Action = { type: "next" } | { type: "undo" };
+type State = {
+  current: Quote | null;
+  /** Every quote shown before `current`, so undo can walk back without limit. */
+  history: Quote[];
+  /** Quotes fetched ahead of time so a tap never waits on the network. */
+  queue: Quote[];
+};
+type Action = { type: "next" } | { type: "undo" } | { type: "enqueue"; quotes: Quote[] };
 
-function pickNextIndex(current: number, total: number) {
-  if (total < 2) return current;
-  const next = Math.floor(Math.random() * (total - 1));
-  return next >= current ? next + 1 : next;
+// Refill the queue when it runs this low, and remember this many recent ids
+// so a refill doesn't bring back a quote the viewer just saw.
+const REFILL_AT = 5;
+const BATCH = 20;
+const RECENT = 200;
+
+function init(initial: Quote[]): State {
+  return { current: initial[0] ?? null, history: [], queue: initial.slice(1) };
 }
 
-// Every quote shown is pushed onto history, so undo can walk back without limit.
 function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "next":
-      return {
-        index: pickNextIndex(state.index, quotes.length),
-        history: [...state.history, state.index],
-      };
+    case "next": {
+      const [next, ...queue] = state.queue;
+      if (!next) return state;
+      if (!state.current) return { ...state, current: next, queue };
+      return { current: next, history: [...state.history, state.current], queue };
+    }
     case "undo": {
       if (state.history.length === 0) return state;
-      return { index: state.history[state.history.length - 1], history: state.history.slice(0, -1) };
+      return {
+        current: state.history[state.history.length - 1],
+        history: state.history.slice(0, -1),
+        queue: state.current ? [state.current, ...state.queue] : state.queue,
+      };
+    }
+    case "enqueue": {
+      const taken = new Set([state.current, ...state.queue].map((q) => q?.id));
+      const fresh = action.quotes.filter((q) => !taken.has(q.id));
+      if (fresh.length === 0) return state;
+      if (!state.current) return { ...state, current: fresh[0], queue: [...state.queue, ...fresh.slice(1)] };
+      return { ...state, queue: [...state.queue, ...fresh] };
     }
   }
+}
+
+/** Keeps the queue topped up from Supabase; falls back to bundled quotes offline. */
+function useQuoteQueue(state: State, dispatch: (a: Action) => void, enabled: boolean) {
+  const loading = useRef(false);
+  const queued = state.queue.length;
+
+  useEffect(() => {
+    if (!enabled || queued >= REFILL_AT || loading.current) return;
+    loading.current = true;
+    const recent = [...state.history, state.current, ...state.queue]
+      .slice(-RECENT)
+      .flatMap((q) => (q ? [q.id] : []));
+    fetchRandomQuotes(BATCH, recent)
+      .then((quotes) => dispatch({ type: "enqueue", quotes: quotes.length ? quotes : shuffledFallback() }))
+      .catch(() => dispatch({ type: "enqueue", quotes: shuffledFallback() }))
+      .finally(() => {
+        loading.current = false;
+      });
+    // Re-check only when the queue shrinks or grows, not on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, queued]);
 }
 
 // Liquid glass "lights up" where the finger or pointer is.
@@ -85,36 +128,47 @@ function useFitQuote(change: unknown) {
   return { cardRef, areaRef, quoteRef };
 }
 
-export default function QuoteView() {
-  const [{ index, history }, dispatch] = useReducer(reducer, { index: 0, history: [] });
-  const quote = quotes[index];
-  const verse = quote.form === "verse";
+/**
+ * `initial` is a server-fetched batch: the first is shown, the rest queued.
+ * `placeholder` renders the empty card while that batch streams in.
+ */
+export default function QuoteView({ initial, placeholder = false }: { initial: Quote[]; placeholder?: boolean }) {
+  const [state, dispatch] = useReducer(reducer, initial, init);
+  const { current: quote, history } = state;
+  useQuoteQueue(state, dispatch, !placeholder);
+  const verse = quote?.form === "verse";
+  const testId = (id: string) => (placeholder ? undefined : id);
   // Every next/undo changes the history length, so it identifies each change.
   const change = history.length;
   const { cardRef, areaRef, quoteRef } = useFitQuote(change);
 
   return (
-    <div className={styles.moment}>
-      <figure ref={cardRef} className={styles.card} data-testid="quote-card">
+    // The placeholder is briefly in the DOM next to the real card while it
+    // streams in, so it's inert and carries no test ids.
+    <div className={styles.moment} inert={placeholder} aria-hidden={placeholder || undefined}>
+      <figure ref={cardRef} className={styles.card} data-testid={testId("quote-card")}>
         <div key={change} className={styles.content}>
           <div ref={areaRef} className={styles.quoteArea}>
             <blockquote
               ref={quoteRef}
               className={verse ? `${styles.quote} ${styles.verse}` : styles.quote}
-              aria-live="polite"
-              data-testid="quote-text"
+              aria-live={placeholder ? undefined : "polite"}
+              data-testid={testId("quote-text")}
             >
-              {verse
-                ? quote.text.split("\n").map((line, i) => (
-                    <span key={i} className={styles.line}>
-                      {line}
-                    </span>
-                  ))
-                : `“${quote.text}”`}
+              {!quote
+                ? null
+                : verse
+                  ? quote.text.split("\n").map((line, i) => (
+                      <span key={i} className={styles.line}>
+                        {line}
+                      </span>
+                    ))
+                  : `“${quote.text}”`}
             </blockquote>
           </div>
-          <figcaption className={styles.credit} data-testid="quote-credit">
-            {quote.credit}
+          <figcaption className={styles.credit} data-testid={testId("quote-credit")}>
+            {quote && <span className={styles.author}>{quote.author}</span>}
+            {quote?.work && <span className={styles.work}>, {quote.work}</span>}
           </figcaption>
         </div>
       </figure>
@@ -122,7 +176,7 @@ export default function QuoteView() {
       <button
         type="button"
         className={styles.journal}
-        data-testid="journal-button"
+        data-testid={testId("journal-button")}
         onPointerMove={trackLight}
         onPointerDown={trackLight}
       >
@@ -135,7 +189,7 @@ export default function QuoteView() {
           type="button"
           className={styles.undo}
           aria-label="Undo, show previous quote"
-          data-testid="undo-button"
+          data-testid={testId("undo-button")}
           disabled={history.length === 0}
           onPointerMove={trackLight}
           onPointerDown={trackLight}
@@ -148,7 +202,7 @@ export default function QuoteView() {
           type="button"
           className={styles.next}
           aria-label="Show another quote"
-          data-testid="next-quote-button"
+          data-testid={testId("next-quote-button")}
           onPointerMove={trackLight}
           onPointerDown={trackLight}
           onClick={() => dispatch({ type: "next" })}
