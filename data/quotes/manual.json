@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "john-steinbeck-and-now-that-you-don-t",
+    "text": "And now that you don’t have to be perfect, you can be good.",
+    "form": "prose",
+    "author": "John Steinbeck",
+    "work": "East of Eden",
+    "translator": null,
+    "citation": "East of Eden (1952), Part 4, ch. 53, sec. 3",
+    "source_name": "Wikiquote",
+    "source_url": "https://en.wikiquote.org/wiki/East_of_Eden_(novel)",
+    "verified_by": "reference",
+    "rights": "copyrighted"
+  },
+  {
+    "slug": "emily-dickinson-hope-is-the-thing-with",
+    "text": "‘Hope’ is the thing with feathers\nThat perches in the soul\nAnd sings the tune without the words\nAnd never stops at all",
+    "form": "verse",
+    "author": "Emily Dickinson",
+    "work": null,
+    "translator": null,
+    "citation": "Fr314 / J254, first stanza (c. 1861)",
+    "source_name": "Wikiquote",
+    "source_url": "https://en.wikiquote.org/wiki/Emily_Dickinson",
+    "verified_by": "reference",
+    "rights": "public_domain"
+  },
+  {
+    "slug": "louisa-may-alcott-i-m-not-afraid-of",
+    "text": "I’m not afraid of storms, for I’m learning how to sail my ship.",
+    "form": "prose",
+    "author": "Louisa May Alcott",
+    "work": "Little Women",
+    "translator": null,
+    "citation": "Little Women (1868), ch. 44 “My Lord and Lady”, spoken by Amy",
+    "source_name": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/514",
+    "verified_by": "primary_text",
+    "rights": "public_domain"
+  },
+  {
+    "slug": "anne-lamott-almost-everything-will-work-again",
+    "text": "Almost everything will work again if you unplug it for a few minutes, including you.",
+    "form": "prose",
+    "author": "Anne Lamott",
+    "work": null,
+    "translator": null,
+    "citation": "“12 truths I learned from life and writing”, TED2017 (first posted on Facebook, 8 April 2015)",
+    "source_name": "TED",
+    "source_url": "https://www.ted.com/talks/anne_lamott_12_truths_i_learned_from_life_and_writing/transcript",
+    "verified_by": "primary_text",
+    "rights": "copyrighted"
+  },
+  {
+    "slug": "robert-frost-the-best-way-out-is",
+    "text": "The best way out is always through.",
+    "form": "prose",
+    "author": "Robert Frost",
+    "work": "A Servant to Servants",
+    "translator": null,
+    "citation": "“A Servant to Servants”, North of Boston (1914)",
+    "source_name": "Project Gutenberg",
+    "source_url": "https://www.gutenberg.org/ebooks/59824",
+    "verified_by": "primary_text",
+    "rights": "public_domain"
+  }
+]
