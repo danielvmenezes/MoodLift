@@ -23,15 +23,17 @@ Track the user's current mood and show a quote suited to it.
 - [ ] Interface changes to match the selected mood
 - [ ] Quotes filtered by the selected mood (currently random across all)
 - [ ] Wire bottom nav to routes (Mood / Quotes / Journal)
-- [ ] Supabase project + `quotes` table (text, author, source, mood, form)
-- [ ] Load quotes from Supabase instead of `src/lib/quotes.ts`
-- [ ] Deploy to Vercel
+- [x] Supabase project + `quotes` table (text, author, work, source, verification, rights, form; moods to come in a join table)
+- [x] Load quotes from Supabase instead of `src/lib/quotes.ts` (bundled quotes kept as offline fallback)
+- [ ] Deploy to Vercel (add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` env vars)
+- [ ] Credits/attribution page: Wikiquote text is CC BY-SA, and `rights = 'copyrighted'` quotes are used as short quotations
 - [ ] "Not professional help" notice with a pointer to professional / crisis resources
 
 ## Milestone 2 — Interaction & curation
 
 - [ ] Quote collection and categorisation pipeline
-  - [ ] Gather quotes (public APIs and team contributions)
+  - [x] Gather ~2,000 verified quotes (Wikiquote sourced entries, Wikisource/Gutenberg primary texts; `scripts/quotes/`)
+  - [ ] Mood tagging (friend), stored in a `quote_moods` join table
   - [ ] Classify by mood with an open-source sentiment model or a lightweight LLM (advisor suggested Jiffy AI) rather than a large LLM
   - [ ] Mental health collaborator reviews quotes for relevance and appropriateness
 - [ ] Supabase Auth
