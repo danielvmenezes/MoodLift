@@ -214,5 +214,173 @@
   {
     "id": "sara-teasdale-i-lift-my-heart-as",
     "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "henry-david-thoreau-29b036bd",
+    "reason": "Popular line with no confirmed source in Thoreau"
+  },
+  {
+    "id": "bertrand-russell-b9c8c883",
+    "reason": "Doesn’t read like Russell; source not confirmed"
+  },
+  {
+    "id": "dale-carnegie-86e4ec98",
+    "reason": "Widely attributed to several people; origin unclear"
+  },
+  {
+    "id": "lao-tzu-70bb0115",
+    "reason": "Loose modern rendering, not a translation of the text"
+  },
+  {
+    "id": "shantideva-bc7d2002",
+    "reason": "Widely shared rendering; wording not checked against a translation"
+  },
+  {
+    "id": "gautama-buddha-f343f602",
+    "reason": "Reads like a modern paraphrase of the Bhaddekaratta Sutta"
+  },
+  {
+    "id": "amit-ray-33c9aff2",
+    "reason": "Close to stock aphorisms; originality not confirmed"
+  },
+  {
+    "id": "marie-curie-b69586c9",
+    "reason": "Widely quoted; original source not confirmed"
+  },
+  {
+    "id": "william-shakespeare-3370444f",
+    "reason": "Spoken by Iago (manipulative villain); misleading out of context"
+  },
+  {
+    "id": "amit-ray-209359b5",
+    "reason": "Close to stock aphorisms; originality not confirmed"
+  },
+  {
+    "id": "john-keats-i-stood-tip-toe-upon-a",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "johann-wolfgang-von-goethe-o-er-all-the-hilltops-is",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "gerard-manley-hopkins-i-have-desired-to-go",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "john-milton-for-other-things-mild-heav-n",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "lydia-sigourney-not-on-the-outer-world",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "james-thomson-i-care-not-fortune-what",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "george-granville-1st-baron-lansdowne-happy-the-man-of-mortals",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "mary-frances-butts-build-a-little-fence-of",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "thomas-moore-i-knew-by-the-smoke",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "robert-greene-sweet-are-the-thoughts-that",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "richard-henry-stoddard-a-voice-of-greeting-from",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "james-beattie-at-the-close-of-the",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "berton-braley-the-best-verse-hasn-t-been",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "henry-wadsworth-longfellow-but-the-nearer-the-dawn",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "william-shakespeare-sweet-are-the-uses-of",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "theodore-tilton-once-in-persia-reigned-a",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "mosleh-eddin-saadi-85e7d507",
+    "reason": "Loose English rendering; attribution to Saadi disputed"
+  },
+  {
+    "id": "lewis-duncombe-cb2aafb6",
+    "reason": "Proverb usually credited to David Everett; attribution unclear"
+  },
+  {
+    "id": "john-f-kennedy-b6184fa0",
+    "reason": "Quoting an \"ancient Chinese proverb\", not his own words"
+  },
+  {
+    "id": "nikos-kazantzakis-dff85105",
+    "reason": "Addressed to a specific person; source work unclear"
+  },
+  {
+    "id": "bill-watterson-b69d46ae",
+    "reason": "Likely a Calvin and Hobbes character line, not Watterson speaking"
+  },
+  {
+    "id": "boris-pasternak-17f0e59a",
+    "reason": "Spoken by a character in Doctor Zhivago"
+  },
+  {
+    "id": "oliver-cromwell-5e01848c",
+    "reason": "Known only second-hand (via Cardinal de Retz)"
+  },
+  {
+    "id": "john-gardiner-calkins-brainard-the-rustle-of-the-leaves",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "william-wordsworth-books-tis-a-dull-and",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "edward-fitzgerald-for-like-a-child-sent",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "adelaide-anne-procter-seated-one-day-at-the",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "stopford-a-brooke-a-little-sun-a-little",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "william-cowper-now-stir-the-fire-and",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "eugene-f-ware-life-is-a-game-of",
+    "reason": "Too long for the smallest card at 12px (e2e/quote-dataset.spec.ts)"
+  },
+  {
+    "id": "percy-bysshe-shelley-1bfed16f",
+    "reason": "Variant wording of a quote the mood screen dropped"
+  },
+  {
+    "id": "emily-dickinson-8216c60f",
+    "reason": "Variant wording of a quote the mood screen dropped"
   }
 ]
