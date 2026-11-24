@@ -33,7 +33,9 @@ Track the user's current mood and show a quote suited to it.
 
 - [ ] Quote collection and categorisation pipeline
   - [x] Gather ~2,000 verified quotes (Wikiquote sourced entries, Wikisource/Gutenberg primary texts; `scripts/quotes/`)
-  - [ ] Mood tagging (friend), stored in a `quote_moods` join table
+  - [x] Screen quotes against the four moods (keep only quotes that help at least one)
+  - [ ] Tag every quote with the moods it helps in `quote_moods` (friend, in the Supabase table editor)
+  - [x] Top up quotes for anxiety, burnout and overwhelm from theme pages and new authors
   - [ ] Classify by mood with an open-source sentiment model or a lightweight LLM (advisor suggested Jiffy AI) rather than a large LLM
   - [ ] Mental health collaborator reviews quotes for relevance and appropriateness
 - [ ] Supabase Auth
@@ -62,7 +64,7 @@ Track the user's current mood and show a quote suited to it.
 
 ## Needs decision
 
-- **Mood set.** The plan is 4 moods (Anxiety, Burnout, Overwhelm, Sadness), to be finalised after the survey and collaborator input (scope allows 4–6). The current placeholder quotes cover burnt out, sad, anxious, lonely, tired and unmotivated.
+- **Mood set.** Settled on 4 moods: anxiety/overthinking, burnout/mental fatigue, overwhelmed/pressure, sadness/feeling down. Quotes are tagged by the mood they help.
 - **Mood picker style.** The pitch describes a colourful, Kahoot-style picker, but the UI direction and advisor favour a darker, comforting look. Agree on how bright the picker and per-mood palettes should be.
 - **Quote rights.** Copyrighted authors (e.g. Steinbeck, Oliver, Lamott) are fine in small numbers. A database of thousands needs a sourcing and attribution policy, especially if quotes come from public APIs.
 
