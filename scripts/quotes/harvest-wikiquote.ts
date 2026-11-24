@@ -7,7 +7,7 @@
 import { join } from "node:path";
 import { authors } from "./authors.ts";
 import { createHash } from "node:crypto";
-import { cachedFetch, CACHE, normalise, typeset, writeJson, type Candidate } from "./common.ts";
+import { CACHE, fetchWikitext, normalise, typeset, writeJson, type Candidate } from "./common.ts";
 
 const API = "https://en.wikiquote.org/w/api.php";
 
@@ -141,68 +141,141 @@ function looksCitation(s: string): boolean {
   return /\d|chapter|ch\.|letter|speech|interview|poem|p\.|book|essay|lecture|address|journal|diary/i.test(s) || s.length < 120;
 }
 
-async function harvestAuthor(page: string, name: string): Promise<Candidate[]> {
-  const url = `${API}?action=parse&page=${encodeURIComponent(page)}&prop=wikitext&format=json&formatversion=2&redirects=1`;
-  const json = JSON.parse(await cachedFetch(url));
-  if (json.error) {
-    console.warn(`  ! ${page}: ${json.error.info}`);
-    return [];
-  }
-  const title: string = json.parse.title;
+// Trailing notes that belong in the citation, not the quote text.
+/** "(Hays translation)", "(Selected Poems, 1898)", "(p. 12)". */
+const EDITORIAL_NOTE = /\s*\(([^()]*(?:\btrans(?:lat\w*|\.)|\b1[5-9]\d\d\b|\b20\d\d\b|\bp\.\s*\d)[^()]*)\)\s*\.?$/i;
+/** Bare chapter/page/section cites: "(Ch 6)", "(p35)", "(28)". */
+const BARE_CITE = /\s*\(\s*((?:ch(?:apter)?\.?|pp?\.?)\s*\d+|\d{1,3})\s*\)\s*\.?$/i;
+
+/** Splits one trailing citation note off a quote's text. */
+function splitTrailingNote(text: string): { text: string; note: string | null } {
+  const m = text.match(EDITORIAL_NOTE) ?? text.match(BARE_CITE);
+  return m ? { text: text.slice(0, m.index), note: m[1].trim() } : { text, note: null };
+}
+
+/**
+ * Candidates from one quote block: the full text, plus bold cores of long passages.
+ * `idName` builds the id (kept stable across harvests); `author` is the credited name.
+ */
+function fromBlock(b: Block, idName: string, author: string, title: string, citation: string): Candidate[] {
   const out: Candidate[] = [];
-  for (const b of blocks(json.parse.wikitext)) {
+  const full = clean(b.quote);
+  const options: { text: string; excerpt: boolean }[] = [{ text: full, excerpt: false }];
+  // A long passage may have a bolded, self-contained core.
+  if (full.length > 280) for (const run of boldRuns(b.quote)) options.push({ text: run, excerpt: true });
+
+  for (const o of options) {
+    const { text: stripped, note } = splitTrailingNote(o.text);
+    let raw = stripped;
+    // Wholly quoted text: often copied from a secondary list, so keep it
+    // only when the citation pins it to a page or chapter; then unwrap it.
+    const wrapped = raw.match(/^\s*["“]([^"“”]+)["”]\s*$/);
+    if (wrapped) {
+      if (!/\bp{1,2}\.\s*\d|\bpage\b|\bch(?:apter|\.)\s*\w/i.test(citation)) continue;
+      raw = wrapped[1];
+    }
+    const text = typeset(raw);
+    const form = acceptable(text);
+    if (!form) continue;
+    out.push({
+      // Stable across re-harvests: author + hash of the wording.
+      id: `${normalise(idName).replace(/ /g, "-")}-${createHash("sha1").update(normalise(text)).digest("hex").slice(0, 8)}`,
+      author,
+      page: title,
+      text,
+      form,
+      citation: note ? `${citation} · ${note}` : citation,
+      work: workOf(b),
+      excerpt: o.excerpt,
+    });
+  }
+  return out;
+}
+
+/** A page's wikitext, or null (with a warning) if it doesn't exist or was already harvested. */
+const harvested = new Set<string>();
+async function loadPage(page: string): Promise<{ title: string; wikitext: string } | null> {
+  const found = await fetchWikitext(API, page);
+  if (!found) console.warn(`  ! ${page}: page doesn't exist`);
+  // Several names can redirect to one page ("Hurry" → "Haste"); read it once.
+  if (!found || harvested.has(found.title)) return null;
+  harvested.add(found.title);
+  return found;
+}
+
+async function harvestAuthor(page: string, name: string): Promise<Candidate[]> {
+  const found = await loadPage(page);
+  if (!found) return [];
+  const { title, wikitext } = found;
+  const out: Candidate[] = [];
+  for (const b of blocks(wikitext)) {
     if (b.headings.length === 0) continue; // lead section, before any heading
     if (b.headings.some((h) => EXCLUDED_HEADING.test(h))) continue;
     const citation = citationOf(b);
     if (!citation) continue;
 
-    const full = clean(b.quote);
-    const options: { text: string; excerpt: boolean }[] = [{ text: full, excerpt: false }];
-    // A long passage may have a bolded, self-contained core.
-    if (full.length > 280) for (const run of boldRuns(b.quote)) options.push({ text: run, excerpt: true });
+    out.push(...fromBlock(b, name, name, title, citation));
+  }
+  return out;
+}
 
-    for (const o of options) {
-      // Editorial notes like "(Hays translation)" or a trailing
-      // "(Selected Poems, 1898)" citation belong in the citation, not the text.
-      const notes: string[] = [];
-      let raw = o.text.replace(
-        /\s*\(([^()]*(?:\btrans(?:lat\w*|\.)|\b1[5-9]\d\d\b|\b20\d\d\b|\bp\.\s*\d)[^()]*)\)\s*\.?$/i,
-        (_, n) => (notes.push(n), ""),
-      );
-      // Wholly quoted text: often copied from a secondary list, so keep it
-      // only when the citation pins it to a page or chapter; then unwrap it.
-      const wrapped = raw.match(/^\s*["“]([^"“”]+)["”]\s*$/);
-      if (wrapped) {
-        if (!/\bp{1,2}\.\s*\d|\bpage\b|\bch(?:apter|\.)\s*\w/i.test(citation)) continue;
-        raw = wrapped[1];
-      }
-      const text = typeset(raw);
-      const form = acceptable(text);
-      if (!form) continue;
-      out.push({
-        // Stable across re-harvests: author + hash of the wording.
-        id: `${normalise(name).replace(/ /g, "-")}-${createHash("sha1").update(normalise(text)).digest("hex").slice(0, 8)}`,
-        author: name,
-        page: title,
-        text,
-        form,
-        citation: [citation, ...notes].join(" · "),
-        work: workOf(b),
-        excerpt: o.excerpt,
-      });
-    }
+// Wikiquote theme pages collect sourced quotes on one topic from many people.
+// Each entry's citation must start with a link to the person who said it;
+// that skips fictional characters, proverbs and anonymous lines. Scripture is
+// skipped too (the app avoids proselytising).
+const THEMES = [
+  "Worry", "Anxiety", "Fear", "Courage", "Uncertainty", "Present", "Mindfulness", "Acceptance",
+  "Rest", "Leisure", "Idleness", "Relaxation", "Sleep", "Fatigue", "Work", "Overwork", "Busyness",
+  "Patience", "Calmness", "Serenity", "Tranquility", "Peace", "Equanimity", "Stillness", "Silence",
+  "Solitude", "Simplicity", "Slowness", "Haste", "Balance", "Moderation", "Contentment",
+  "Stress", "Pressure", "Perfection", "Perseverance", "Endurance", "Resilience", "Adversity",
+  "Difficulty", "Self-compassion", "Gentleness", "Kindness", "Nature", "Walking", "Gardening",
+  "Tomorrow", "Today", "Letting go", "Trust", "Breathing", "Meditation", "Play", "Holiday",
+  "Failure", "Mistakes", "Imperfection", "Self-acceptance", "Time", "Hurry", "Beginning", "Change",
+  "Future", "Past", "Thought", "Mind", "Weariness", "Vacation", "Effort", "Small things",
+  "Laziness", "Recreation", "Health", "Comfort", "Ease", "Evening", "Morning", "Night", "Seasons",
+  "Rain", "Trees", "Flowers", "Sea", "Garden", "Music", "Laughter", "Humor", "Help", "Limits",
+  "Priorities", "Ambition", "Success", "Habit", "Routine", "Order", "Chaos", "Confusion",
+  "Decision", "Choice", "Burden", "Strength", "Weakness", "Vulnerability", "Self-care", "Growth",
+  "Progress", "Journey", "Process", "Steps", "Life", "Living", "Wonder", "Tea", "Books", "Reading",
+];
+
+const SCRIPTURE = /\b(Bible|Gospel|Psalms?|Proverbs|Matthew|Mark \d|Luke|John \d|Isaiah|Philippians|Corinthians|Romans|Hebrews|Ecclesiastes|Qur'?an|Koran|Torah)\b/;
+
+/** Credited name for a linked person: the authors.ts name, else the page title. */
+const nameByPage = new Map(authors.map((a) => [a.page, a.name ?? a.page]));
+const creditFor = (target: string) => nameByPage.get(target) ?? target.replace(/\s*\([^)]*\)$/, "");
+
+async function harvestTheme(page: string): Promise<Candidate[]> {
+  const found = await loadPage(page);
+  if (!found) return [];
+  const { title, wikitext } = found;
+  const out: Candidate[] = [];
+  for (const b of blocks(wikitext)) {
+    if (b.headings.some((h) => EXCLUDED_HEADING.test(h) || /proverb|saying|anonymous|folk/i.test(h))) continue;
+    const first = (b.subs[0] ?? "").trim();
+    const link = first.match(/^\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/);
+    if (!link || /^(w|wikipedia|s|wikisource):/i.test(link[1]) || link[1].startsWith(":")) continue;
+    if (SCRIPTURE.test(first)) continue;
+    // The label as written builds the id (stable for curated selections); the
+    // linked page gives the credited name, so "Khalil Gibran" or "Nhat Hanh"
+    // is credited the same way as the author's own page.
+    const label = clean(link[2] ?? link[1].replace(/\s*\([^)]*\)$/, ""));
+    if (!label || /anonymous|unknown|proverb/i.test(label)) continue;
+    out.push(...fromBlock(b, label, creditFor(clean(link[1])), title, clean(first)));
   }
   return out;
 }
 
 const all: Candidate[] = [];
 const ids = new Set<string>();
-for (const a of authors) {
-  const name = a.name ?? a.page;
-  // A page can list the same quote twice; keep the first.
-  const found = (await harvestAuthor(a.page, name)).filter((c) => !ids.has(c.id) && ids.add(c.id));
-  console.log(`${String(found.length).padStart(4)}  ${name}`);
-  all.push(...found);
+/** Keeps the first candidate per id (a quote can appear twice, or on several pages). */
+function collect(label: string, found: Candidate[]) {
+  const fresh = found.filter((c) => !ids.has(c.id) && ids.add(c.id));
+  console.log(`${String(fresh.length).padStart(4)}  ${label}`);
+  all.push(...fresh);
 }
+for (const a of authors) collect(a.name ?? a.page, await harvestAuthor(a.page, a.name ?? a.page));
+for (const page of THEMES) collect(`[theme] ${page}`, await harvestTheme(page));
 writeJson(join(CACHE, "candidates.json"), all);
-console.log(`\n${all.length} candidates from ${authors.length} authors`);
+console.log(`\n${all.length} candidates from ${authors.length} authors and ${THEMES.length} theme pages`);

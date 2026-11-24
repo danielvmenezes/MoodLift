@@ -37,6 +37,13 @@ export type QuoteRecord = {
   rights: "public_domain" | "copyrighted";
 };
 
+/** A quote dropped after review (candidate id, or slug for card-fit drops). */
+export type Exclusion = { id: string; reason: string };
+
+/** The four moods MoodLift covers; keep in sync with the `moods` table. */
+export const MOODS = ["anxiety", "burnout", "overwhelm", "sadness"] as const;
+export const isMood = (m: string): m is (typeof MOODS)[number] => (MOODS as readonly string[]).includes(m);
+
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /** GET with an on-disk cache so reruns don't hit the sources again. */
@@ -60,6 +67,31 @@ export async function cachedFetch(url: string, { retries = 6 } = {}): Promise<st
     console.warn(`  … ${res.status}, waiting ${wait}s`);
     await sleep(wait * 1000);
   }
+}
+
+/** A page's wikitext via the MediaWiki parse API (redirects followed); null if it doesn't exist. */
+export async function fetchWikitext(
+  api: string,
+  page: string,
+  fetcher: (url: string) => Promise<string> = cachedFetch,
+): Promise<{ title: string; wikitext: string } | null> {
+  const url = `${api}?action=parse&page=${encodeURIComponent(page)}&prop=wikitext&format=json&formatversion=2&redirects=1`;
+  const json = JSON.parse(await fetcher(url));
+  return json.parse ? { title: json.parse.title, wikitext: json.parse.wikitext } : null;
+}
+
+/** Non-blank `key<TAB>value` rows from TSV files, values comma-split and trimmed. */
+export function readTsv(files: string[]): { file: string; key: string; values: string[] }[] {
+  if (files.length === 0) throw new Error("Pass one or more TSV files.");
+  return files.flatMap((file) =>
+    readFileSync(file, "utf8")
+      .split("\n")
+      .filter((line) => line.trim())
+      .map((line) => {
+        const [key, value = ""] = line.split("\t").map((s) => s.trim());
+        return { file, key, values: value.split(",").map((v) => v.trim()) };
+      }),
+  );
 }
 
 /** Text used to compare wordings: case, punctuation and spacing ignored. */

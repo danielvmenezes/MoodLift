@@ -1,5 +1,7 @@
 // Sync the `quotes` table to data/quotes/quotes.json: upsert every quote
 // (matched on slug), then delete rows whose slug is no longer in the file.
+// Mood labels (quote_moods) are added by a person in the Supabase table
+// editor; this script never touches them.
 // Needs a server-only secret key, never exposed to the browser:
 //
 //   SUPABASE_SECRET_KEY=sb_secret_... in .env.local (no NEXT_PUBLIC_ prefix)
@@ -24,15 +26,14 @@ for (let i = 0; i < quotes.length; i += BATCH) {
 
 // Remove quotes dropped from the data set since the last load.
 const keep = new Set(quotes.map((q) => q.slug));
-const slugs: string[] = [];
+const stale: string[] = [];
 for (let from = 0; ; from += 1000) {
   // The API returns at most 1,000 rows per request, so page through.
   const { data, error } = await db.from("quotes").select("slug").order("id").range(from, from + 999);
   if (error) throw error;
-  slugs.push(...data.map((r) => r.slug as string));
+  stale.push(...data.map((r) => r.slug as string).filter((slug) => !keep.has(slug)));
   if (data.length < 1000) break;
 }
-const stale = slugs.filter((slug) => !keep.has(slug));
 for (let i = 0; i < stale.length; i += 100) {
   const { error } = await db.from("quotes").delete().in("slug", stale.slice(i, i + 100));
   if (error) throw error;

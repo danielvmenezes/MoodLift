@@ -14,8 +14,8 @@
 import { join } from "node:path";
 import { authors } from "./authors.ts";
 import {
-  cachedFetch, CACHE, DATA, normalise, readJson, slugify, writeJson,
-  type Candidate, type QuoteRecord,
+  cachedFetch, CACHE, DATA, fetchWikitext, normalise, readJson, slugify, writeJson,
+  type Candidate, type Exclusion, type QuoteRecord,
 } from "./common.ts";
 
 const WIKISOURCE = "https://en.wikisource.org/w/api.php";
@@ -25,7 +25,7 @@ const candidates = new Map(readJson<Candidate[]>(join(CACHE, "candidates.json"))
 const selection = readJson<string[]>(join(DATA, "selection.json"));
 const manual = readJson<QuoteRecord[]>(join(DATA, "manual.json"));
 const excluded = new Map(
-  readJson<{ id: string; reason: string }[]>(join(DATA, "excluded.json")).map((e) => [e.id, e.reason]),
+  readJson<Exclusion[]>(join(DATA, "excluded.json")).map((e) => [e.id, e.reason]),
 );
 const authorInfo = new Map(authors.map((a) => [a.name ?? a.page, a]));
 
@@ -54,10 +54,18 @@ async function wikisourceFetch(url: string): Promise<string> {
   }
 }
 
-async function wikitext(api: string, title: string): Promise<string | null> {
-  const url = `${api}?action=parse&page=${encodeURIComponent(title)}&prop=wikitext&format=json&formatversion=2&redirects=1`;
-  const json = JSON.parse(api === WIKISOURCE ? await wikisourceFetch(url) : await cachedFetch(url));
-  return json.parse?.wikitext ?? null;
+// Many quotes share a page (theme pages hold hundreds), so normalise each page once.
+const pageText = new Map<string, Promise<string | null>>();
+function plainPage(api: string, title: string): Promise<string | null> {
+  const key = `${api} ${title}`;
+  if (!pageText.has(key)) {
+    const fetcher = api === WIKISOURCE ? wikisourceFetch : cachedFetch;
+    const text = fetchWikitext(api, title, fetcher).then((p) => (p ? plain(p.wikitext) : null));
+    // Don't remember failures (e.g. a Wikisource rate limit); a later quote may retry.
+    text.catch(() => pageText.delete(key));
+    pageText.set(key, text);
+  }
+  return pageText.get(key)!;
 }
 
 /** The longest run of words with no punctuation — the most searchable phrase. */
@@ -80,9 +88,8 @@ async function findOnWikisource(c: Candidate): Promise<{ title: string } | null>
   const surname = normalise(c.author).split(" ").at(-1)!;
   const want = normalise(c.text);
   for (const hit of hits) {
-    const page = await wikitext(WIKISOURCE, hit.title);
-    if (!page) continue;
-    const text = plain(page);
+    const text = await plainPage(WIKISOURCE, hit.title);
+    if (!text) continue;
     // Must contain the whole quote and name the author (header or title).
     if (text.includes(want) && (text.includes(surname) || normalise(hit.title).includes(surname))) {
       return { title: hit.title };
@@ -92,8 +99,8 @@ async function findOnWikisource(c: Candidate): Promise<{ title: string } | null>
 }
 
 async function onWikiquote(c: Candidate): Promise<boolean> {
-  const page = await wikitext(WIKIQUOTE, c.page);
-  return !!page && plain(page).includes(normalise(c.text));
+  const page = await plainPage(WIKIQUOTE, c.page);
+  return !!page && page.includes(normalise(c.text));
 }
 
 const wikiUrl = (base: string, title: string) =>
@@ -114,7 +121,7 @@ function translatorOf(citation: string): string | null {
 }
 
 const out: QuoteRecord[] = [...manual];
-const rejected: { id: string; reason: string }[] = [];
+const rejected: Exclusion[] = [];
 const seen = new Set(manual.map((q) => normalise(q.text)));
 const slugs = new Set(manual.map((q) => q.slug));
 
@@ -125,7 +132,10 @@ for (const id of selection) {
   if (!c) { rejected.push({ id, reason: "unknown candidate id" }); continue; }
   if (/[a-z][.,;:!?][A-Z]/.test(c.text)) { rejected.push({ id, reason: "run-together lines" }); continue; }
   if (/\s(?:n[’']t|[’'](?:s|ll|d|re|ve|m))\b/.test(c.text)) { rejected.push({ id, reason: "old-style split contraction" }); continue; }
-  if (excluded.has(id)) { rejected.push({ id, reason: `excluded: ${excluded.get(id)}` }); continue; }
+  let slug = `${slugify(c.author)}-${slugify(c.text.split(/\s+/).slice(0, 5).join(" "))}`;
+  // Excluded by id, or by slug for quotes the dataset e2e test found too long for the card.
+  const why = excluded.get(id) ?? excluded.get(slug);
+  if (why) { rejected.push({ id, reason: `excluded: ${why}` }); continue; }
   const key = normalise(c.text);
   if (seen.has(key)) { rejected.push({ id, reason: "duplicate" }); continue; }
 
@@ -133,9 +143,6 @@ for (const id of selection) {
   const reference = primary ? true : await onWikiquote(c).catch(() => false);
   if (!primary && !reference) { rejected.push({ id, reason: "wording not found at source" }); continue; }
 
-  let slug = `${slugify(c.author)}-${slugify(c.text.split(/\s+/).slice(0, 5).join(" "))}`;
-  // Excluded by slug: quotes the dataset e2e test found too long for the card.
-  if (excluded.has(slug)) { rejected.push({ id, reason: `excluded: ${excluded.get(slug)}` }); continue; }
   for (let n = 2; slugs.has(slug); n++) slug = `${slug.replace(/-\d+$/, "")}-${n}`;
   slugs.add(slug);
   seen.add(key);
