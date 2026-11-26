@@ -43,6 +43,8 @@ Anything that can't be traced to a source is left out. That includes popular lin
 
 Mood tags live in `quote_moods` and are added by hand in the Supabase table editor (one row per quote and mood). A quote is tagged with the moods it helps, not the mood it expresses (a hopeful quote is tagged for sadness), and can have several. Set `reviewed = true` once a tag has been checked. The scripts never write tags.
 
+To tag from an outside tool (a database GUI or a script) instead of the dashboard, use the `quote_tagger` login. It can read quotes and moods and change only `quote_moods`. Connect through the Session pooler as `quote_tagger.<project-ref>`; the project owner sets its password with `alter role quote_tagger with password '...'` and can switch it off with `alter role quote_tagger nologin`. Don't share the admin `postgres` password for this.
+
 ### Rebuilding the data set
 
 The pipeline in `scripts/quotes/` runs with plain Node 24:
